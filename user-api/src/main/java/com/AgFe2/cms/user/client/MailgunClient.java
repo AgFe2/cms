@@ -1,7 +1,6 @@
 package com.AgFe2.cms.user.client;
 
 import com.AgFe2.cms.user.client.mailgun.SendMailForm;
-import feign.Response;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
