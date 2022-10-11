@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EmailSendServiceTest {
 
     @Autowired
-    private MailgunClient mailgunClinet;
+    private MailgunClient mailgunClient;
 
     @Test
     public void EmailTest () {
@@ -22,7 +22,7 @@ class EmailSendServiceTest {
                 .text("my text")
                 .build();
 
-        mailgunClinet.sendEmail(form);
+        mailgunClient.sendEmail(form);
 //        String response = mailgunClinet.sendEmail();
 //        System.out.println(response);
 
