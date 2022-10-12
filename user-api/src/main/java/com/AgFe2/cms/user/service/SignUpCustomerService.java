@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Optional;
 
-import static com.AgFe2.cms.user.exception.ErrorCode.NOT_FOUND_USER;
+import static com.AgFe2.cms.user.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +27,20 @@ public class SignUpCustomerService {
     public boolean isEmailExist(String email) {
         return customerRepository.findByEmail(email.toLowerCase(Locale.ROOT))
                 .isPresent();
+    }
+
+    @Transactional
+    public void verifyEmail(String email, String code) {
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
+        if (customer.isVerify()) {
+            throw new CustomException(ALREADY_VERIFY);
+        } else if (!customer.getVerificationCode().equals(code)) {
+            throw new CustomException(WRONG_VERIFICATION);
+        } else if (customer.getVerifyExpiredAt().isBefore(LocalDateTime.now())) {
+            throw new CustomException(EXPIRE_CODE);
+        }
+        customer.setVerify(true);
     }
 
     @Transactional
