@@ -2,8 +2,10 @@ package com.AgFe2.cms.user.application;
 
 import com.AgFe2.cms.user.domain.SignInForm;
 import com.AgFe2.cms.user.domain.model.Customer;
+import com.AgFe2.cms.user.domain.model.Seller;
 import com.AgFe2.cms.user.exception.CustomException;
-import com.AgFe2.cms.user.service.CustomerService;
+import com.AgFe2.cms.user.service.customer.CustomerService;
+import com.AgFe2.cms.user.service.seller.SellerService;
 import com.AgFe2.domain.config.JwtAuthenticationProvider;
 import com.AgFe2.domain.domain.common.UserType;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import static com.AgFe2.cms.user.exception.ErrorCode.*;
 public class SignInApplication {
 
     private final CustomerService customerService;
+    private final SellerService sellerService;
     private final JwtAuthenticationProvider provider;
 
     public String customerLoginToken(SignInForm form) {
@@ -25,5 +28,12 @@ public class SignInApplication {
         // 2. 토큰 발행
         // 3. 토큰을 response
         return provider.createToken(c.getEmail(), c.getId(), UserType.CUSTOMER);
+    }
+
+    public String sellerLoginToken(SignInForm form) {
+        Seller s = sellerService.findValidSeller(form.getEmail(), form.getPassword())
+                .orElseThrow(() -> new CustomException(LOGIN_CHECK_FAIL));
+
+        return provider.createToken(s.getEmail(), s.getId(), UserType.SELLER);
     }
 }

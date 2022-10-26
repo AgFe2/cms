@@ -1,4 +1,4 @@
-package com.AgFe2.cms.user.service;
+package com.AgFe2.cms.user.service.customer;
 
 import com.AgFe2.cms.user.domain.model.Customer;
 import com.AgFe2.cms.user.domain.repository.CustomerRepository;
