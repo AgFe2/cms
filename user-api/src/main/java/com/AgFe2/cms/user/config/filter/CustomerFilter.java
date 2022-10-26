@@ -1,6 +1,6 @@
 package com.AgFe2.cms.user.config.filter;
 
-import com.AgFe2.cms.user.service.CustomerService;
+import com.AgFe2.cms.user.service.customer.CustomerService;
 import com.AgFe2.domain.config.JwtAuthenticationProvider;
 import com.AgFe2.domain.domain.common.UserVo;
 import lombok.RequiredArgsConstructor;
